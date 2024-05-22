@@ -1,0 +1,8 @@
+#ignore pycache
+__pycache__/
+#ignore .env
+.env
+venv/
+#ignore xlsx and csv
+*.xlsx
+*.csv

@@ -1,19 +1,17 @@
 import streamlit as st
+import os
 from scripts.rag import get_answer, store
+from scripts.transloading import vdb, post_setup
 from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.messages import HumanMessage, AIMessage
 import uuid
 from pprint import pprint
 
-with st.sidebar:
-    api_key = st.text_input("OpenAI API Key", type="password")
-
-if not api_key:
-    st.warning("Please enter your OpenAI API key in the sidebar.")
-    st.stop()
+reload_data = st.button("Reload Data")
+if reload_data:
+    vdb = post_setup(vdb)
 
 st.title('QA With ChatGPT')
-
 #New conversation
 session_id = "123456789"
 if "store" not in st.session_state:

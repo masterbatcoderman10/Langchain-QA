@@ -53,8 +53,8 @@ def setup_db():
     return vdb
 
 
-if __name__ == '__main__':
-    vdb = setup_db()
-    
+
+vdb = setup_db()
+retriever = vdb.as_retriever(search_type="similarity", search_kwargs={'k' : 5})
 
     

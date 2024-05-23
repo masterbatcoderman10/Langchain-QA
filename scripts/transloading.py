@@ -16,7 +16,7 @@ text_splitter = RecursiveCharacterTextSplitter(
 
 def load_data():
 
-    loader = CSVLoader(file_path='data/compiled_content.csv')
+    loader = CSVLoader(file_path='data/compiled_content.csv', source_column='url')
     print("Data loaded from CSV")
     data = loader.load()
     splits = text_splitter.split_documents(data)

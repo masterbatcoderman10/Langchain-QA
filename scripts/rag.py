@@ -93,11 +93,17 @@ def get_answer(question: str, session_id: str = None):
     #     },  # constructs a key "abc123" in `store`.
     # )["answer"]
     for chunk in conversational_rag_chain.stream(
-        {"input": "What is electronic waste?"},
+        {"input": question},
         config={"configurable": {"session_id": "abc123"}},
     ):
         if 'answer' in chunk:
             yield chunk['answer']
+        
+for chunk in get_answer("What is electronic waste?"):
+    print(chunk, end="", flush=True)
+print("\n")
+for chunk in get_answer("How to safely recycle it?"):
+    print(chunk, end="", flush=True)
 
 
 # rag_chain = (

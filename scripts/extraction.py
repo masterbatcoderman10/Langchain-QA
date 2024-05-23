@@ -7,7 +7,7 @@ from pprint import pprint
 from youtube_transcript_api import YouTubeTranscriptApi
 
 
-def load_data(file: str):
+def load_data(file: str) -> pd.DataFrame:
 
     """
     Load data from a CSV or Excel file into a pandas dataframe.

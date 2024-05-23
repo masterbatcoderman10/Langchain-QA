@@ -5,6 +5,13 @@ from langchain_core.messages import HumanMessage, AIMessage
 import uuid
 from pprint import pprint
 
+with st.sidebar:
+    api_key = st.text_input("OpenAI API Key", type="password")
+
+if not api_key:
+    st.warning("Please enter your OpenAI API key in the sidebar.")
+    st.stop()
+
 st.title('QA With ChatGPT')
 
 #New conversation

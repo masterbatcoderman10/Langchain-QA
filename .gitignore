@@ -6,3 +6,4 @@ venv/
 #ignore xlsx and csv
 *.xlsx
 *.csv
+chroma_db/

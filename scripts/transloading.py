@@ -2,6 +2,7 @@ import os
 from langchain_community.document_loaders.csv_loader import CSVLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pprint import pprint
+import chromadb
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv
@@ -25,23 +26,35 @@ def load_data():
 
 def setup_db():
     
+    
     if not os.path.exists('data/compiled_content.csv'):
         print("No data found. Please run the extraction script first.")
         return
     elif not os.path.exists('data/chroma_db'):
         print("Creating new database")
         splits = load_data()
-        vdb = Chroma.from_documents(documents=splits, embedding=OpenAIEmbeddings(), persist_directory='data/chroma_db')
+        vdb = Chroma.from_documents(documents=splits, embedding=OpenAIEmbeddings(), persist_directory='data/chroma_db', collection_name='compiled_content')
         print("Database created")
     else:
         print("Database already exists")
-        vdb = Chroma(persist_directory='data/chroma_db', embedding=OpenAIEmbeddings())
+        persistent_client = chromadb.PersistentClient(path='data/chroma_db')
+        vdb = Chroma(
+            client=persistent_client,
+            embedding_function=OpenAIEmbeddings(), 
+            collection_name='compiled_content'
+        )
         print("Database loaded")
+
+        # Get the Chroma collection and count documents
+        chroma_collection = persistent_client.get_collection("compiled_content")
+        num_docs = chroma_collection.count()
+        print(f"Number of documents in the database: {num_docs}")
 
     return vdb
 
 
 if __name__ == '__main__':
-    pass
+    vdb = setup_db()
+    
 
     

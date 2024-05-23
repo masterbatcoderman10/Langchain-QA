@@ -15,7 +15,10 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.messages import HumanMessage
+from pprint import pprint
 
+### Statefully manage chat history ###
+store = {}
 load_dotenv()
 
 
@@ -71,9 +74,6 @@ question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
 rag_chain = create_retrieval_chain(
     history_aware_retriever, question_answer_chain)
 
-### Statefully manage chat history ###
-store = {}
-
 conversational_rag_chain = RunnableWithMessageHistory(
     rag_chain,
     get_session_history,
@@ -94,16 +94,18 @@ def get_answer(question: str, session_id: str = None):
     # )["answer"]
     for chunk in conversational_rag_chain.stream(
         {"input": question},
-        config={"configurable": {"session_id": "abc123"}},
+        config={"configurable": {"session_id": session_id}},
     ):
         if 'answer' in chunk:
             yield chunk['answer']
         
-for chunk in get_answer("What is electronic waste?"):
-    print(chunk, end="", flush=True)
-print("\n")
-for chunk in get_answer("How to safely recycle it?"):
-    print(chunk, end="", flush=True)
+# for chunk in get_answer("What is electronic waste?"):
+#     print(chunk, end="", flush=True)
+# print("\n")
+# for chunk in get_answer("How to safely recycle it?"):
+#     print(chunk, end="", flush=True)
+
+# pprint(store)
 
 
 # rag_chain = (

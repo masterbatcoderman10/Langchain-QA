@@ -133,7 +133,7 @@ def upload_text_contect(file: str, content: dict):
 
 
 
-if __name__ == '__main__':
+def main():
 
     # Load the data from the file
     file = 'data/Template.xlsx'

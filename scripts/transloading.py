@@ -17,7 +17,7 @@ text_splitter = RecursiveCharacterTextSplitter(
 
 def load_splits(file_path: str = 'data/compiled_content.csv'):
 
-    loader = CSVLoader(file_path=file_path, source_column='url')
+    loader = CSVLoader(file_path=file_path, source_column='url', encoding='utf-8')
     print("Data loaded from CSV")
     data = loader.load()
     splits = text_splitter.split_documents(data)
@@ -80,9 +80,9 @@ def post_setup(vdb: Chroma):
         #append new content to the content file
         content = pd.concat([content, extra_subset])
 
-        content.to_csv('data/compiled_content.csv', index=False)
+        content.to_csv('data/compiled_content.csv', encoding="utf-8", index=False)
 
-        extra_subset.to_csv('data/temp.csv', index=False)
+        extra_subset.to_csv('data/temp.csv', encoding='utf-8', index=False)
         new_splits = load_splits('data/temp.csv')
 
         vdb.add_documents(new_splits)

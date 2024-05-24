@@ -22,7 +22,7 @@ def load_data(file: str) -> pd.DataFrame:
     # check extension xlsx or csv
     extension = os.path.splitext(file)[1]
     if extension == '.csv':
-        df = pd.read_csv(file)
+        df = pd.read_csv(file, encoding='utf-8')
     elif extension == '.xlsx':
         df = pd.read_excel(file)
     else:
@@ -126,7 +126,7 @@ def upload_text_contect(file: str, content: dict):
     #map urls to content_from_url
     df['content_from_url'] = df['url'].map(content)
 
-    df.to_csv('data/compiled_content.csv', index=False)
+    df.to_csv('data/compiled_content.csv', encoding="utf-8",index=False)
 
 
     

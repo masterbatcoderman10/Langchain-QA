@@ -14,7 +14,8 @@ This can be done in 2 ways:
 $ python3 -m venv venv
 $ source venv/bin/activate # On Mac
 $ venv\Scripts\activate # On Windows
-$ pip install -r requirements.txt
+$ pip install -r requirements.txt # On Mac/Linux
+$ pip install -r requirements_w.txt # On Windows
 ```
 
 2. Using the `Makefile` (On mac, linux and WSL):
@@ -45,4 +46,7 @@ $ python -m streamlit run scripts/main.py
 ```
 
 Starting the app for the first time will open the application in your default browser. After an initial start the data will be extracted if not already done and the app will be ready to use.
+
+If the application did not open in your browser, you can copy the URL from the terminal and paste it in your browser. For reference : http://localhost:8501
+
 
